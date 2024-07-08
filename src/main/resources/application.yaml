@@ -1,0 +1,17 @@
+quarkus:
+  datasource:
+    db-kind: postgresql
+    db-version: 16.0.0
+    username: postgres
+    password: postgres
+#    reactive:
+#      url: postgresql://localhost:5432/easy_videos
+#      max-size: 20
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/easy_videos
+
+#  hibernate-orm:
+#    database:
+#      generation: drop-and-create
+  flyway:
+    migrate-at-start: true
