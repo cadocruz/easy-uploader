@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: easyvideos-uploader
+  labels:
+    app: easyvideos-uploader
+spec:
+  selector:
+    matchLabels:
+      app: easyvideos-uploader
+  replicas: 2
+  template:
+    metadata:
+      name: easyvideos-uploader
+      labels:
+        app: easyvideos-uploader
+    spec:
+      containers:
+        - name: easyvideos-uploder
+          image: "cadocruz/easyvideos-uploader:native-1.0.0"
