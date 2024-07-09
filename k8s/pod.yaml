@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: easyvideos-uploader
+  labels:
+    role: easyvideos-uploader
+spec:
+  containers:
+    - name: easyvideos-uploder
+      image: "cadocruz/easyvideos-uploader:native-1.0.0"

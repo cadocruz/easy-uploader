@@ -8,10 +8,10 @@ quarkus:
 #      url: postgresql://localhost:5432/easy_videos
 #      max-size: 20
     jdbc:
-      url: jdbc:postgresql://localhost:5432/easy_videos
+      url: jdbc:postgresql://host.docker.internal:5432/easy_videos
 
 #  hibernate-orm:
 #    database:
 #      generation: drop-and-create
   flyway:
-    migrate-at-start: true
+    migrate-at-start: trued
