@@ -5,7 +5,7 @@ import io.smallrye.mutiny.Uni;
 import java.util.Optional;
 
 public interface VideoGateway {
-    Video create(Video aVideo);
+    Uni<Video> create(Video aVideo);
 
     void deleteById(String anId);
 

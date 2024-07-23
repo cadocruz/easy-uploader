@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.Year;
 
 @Accessors(fluent = true, chain = false)
@@ -20,8 +21,8 @@ public class Video {
     private double duration;
     private Rating rating;
     private boolean published;
-    private Instant createdAt;
-    private Instant updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private VideoMedia videoMedia;
 
     private Video(final String title, final String description, final Year launchedAt, final double duration, final Rating rating, final VideoMedia videoMedia) {
@@ -32,8 +33,8 @@ public class Video {
         this.duration = duration;
         this.rating = rating;
         this.published = false;
-        this.createdAt = Instant.now();
-        this.updatedAt = Instant.now();
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
         this.videoMedia = videoMedia;
     }
 
@@ -61,15 +62,15 @@ public class Video {
                              final double duration,
                              final Rating rating,
                              final boolean published,
-                             final Instant createdAt,
-                             final Instant updatedAt,
+                             final LocalDateTime createdAt,
+                             final LocalDateTime updatedAt,
                              final VideoMedia videoMedia) {
         return new Video(id, title, description, launchedAt, duration, rating, published, createdAt, updatedAt, videoMedia);
     }
 
     public Video updateVideoMedia(final VideoMedia videoMedia) {
         this.videoMedia = videoMedia;
-       this.updatedAt = Instant.now();
+       this.updatedAt = LocalDateTime.now();
         return this;
     }
 
@@ -151,19 +152,19 @@ public class Video {
         this.published = published;
     }
 
-    public Instant getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Instant getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Instant updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

@@ -9,6 +9,7 @@ import lombok.Data;
 @Table(name = "videos_video_media")
 @Data
 public class VideoMediaJpaEntity {
+
     @Id
     private String id;
 

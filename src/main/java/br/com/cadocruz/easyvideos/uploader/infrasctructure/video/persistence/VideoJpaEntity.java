@@ -2,19 +2,21 @@ package br.com.cadocruz.easyvideos.uploader.infrasctructure.video.persistence;
 
 import br.com.cadocruz.easyvideos.uploader.domain.entities.Rating;
 import br.com.cadocruz.easyvideos.uploader.domain.entities.Video;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.Year;
 
 @Entity(name = "Video")
 @Table (name = "videos")
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class VideoJpaEntity {
+public class VideoJpaEntity extends PanacheEntityBase {
     @Id
     @Column(name = "id", nullable = false)
     private String id;
@@ -31,6 +33,7 @@ public class VideoJpaEntity {
     @Column(name = "published", nullable = false)
     private boolean published;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "rating")
     private Rating rating;
 
@@ -38,10 +41,10 @@ public class VideoJpaEntity {
     private double duration;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP")
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = true, columnDefinition = "TIMESTAMP")
-    private Instant updatedAt;
+    private LocalDateTime updatedAt;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "video_id")

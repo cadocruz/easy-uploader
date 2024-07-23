@@ -1,28 +1,36 @@
 package br.com.cadocruz.easyvideos.uploader.infrasctructure.video;
 
+import br.com.cadocruz.ExampleResource;
 import br.com.cadocruz.easyvideos.uploader.domain.entities.Video;
 import br.com.cadocruz.easyvideos.uploader.domain.entities.VideoGateway;
 import br.com.cadocruz.easyvideos.uploader.infrasctructure.video.persistence.VideoJpaEntity;
 import br.com.cadocruz.easyvideos.uploader.infrasctructure.video.persistence.repository.VideoRepository;
-import io.smallrye.common.annotation.Blocking;
+import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.jboss.logging.Logger;
 
 import java.util.Optional;
 
 @ApplicationScoped
-@Blocking
 public class VideoPostgreSQLGateway implements VideoGateway {
 
+    private static final Logger log = Logger.getLogger(VideoPostgreSQLGateway.class);
     @Inject
     VideoRepository videoRepository;
 
 
     @Override
-    public Video create(Video aVideo) {
-        this.videoRepository.persist(VideoJpaEntity.from(aVideo));
-        return aVideo;
+    @WithTransaction
+    public Uni<Video> create(Video aVideo) {
+        VideoJpaEntity videoJpaEntity = VideoJpaEntity.from(aVideo);
+        return this.videoRepository.persistAndFlush(videoJpaEntity)
+                .onFailure().invoke(t -> log.info(t.getMessage(), t))
+                .onItem().transform(VideoJpaEntity::toAggregate);
+
+//        return this.videoRepository.persistAndFlush(videoJpaEntity).onItem().transform(VideoJpaEntity::toAggregate)
+//                .onFailure().invoke(t -> log.info(t.getMessage(), t));
     }
 
     @Override

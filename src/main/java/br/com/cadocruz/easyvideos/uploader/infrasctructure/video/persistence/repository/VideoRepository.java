@@ -1,9 +1,8 @@
 package br.com.cadocruz.easyvideos.uploader.infrasctructure.video.persistence.repository;
 
 import br.com.cadocruz.easyvideos.uploader.infrasctructure.video.persistence.VideoJpaEntity;
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
-import jakarta.enterprise.context.ApplicationScoped;
+import io.quarkus.hibernate.reactive.panache.PanacheRepositoryBase;
 
-@ApplicationScoped
-public class VideoRepository  implements PanacheRepository<VideoJpaEntity> {
+
+public interface VideoRepository extends PanacheRepositoryBase<VideoJpaEntity, String> {
 }

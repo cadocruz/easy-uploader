@@ -5,7 +5,9 @@ import br.com.cadocruz.easyvideos.uploader.application.video.create.CreateVideoU
 import br.com.cadocruz.easyvideos.uploader.domain.entities.Rating;
 import br.com.cadocruz.easyvideos.uploader.domain.entities.Resource;
 import br.com.cadocruz.easyvideos.uploader.infrasctructure.api.VideoAPI;
+import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.core.Response;
 import org.jboss.resteasy.reactive.multipart.FileUpload;
 
 import java.io.File;
@@ -25,7 +27,7 @@ public class VideoController implements VideoAPI {
     protected CreateVideoUseCase createVideoUseCase;
 
     @Override
-    public String createVideo(String title,
+    public Uni<Response> createVideo(String title,
                                      String description,
                                      Integer yearLaunched,
                                      Double duration,
@@ -41,7 +43,9 @@ public class VideoController implements VideoAPI {
                 Rating.valueOf(rating),
                 resourceOf(videoFile)
         );
-        return createVideoUseCase.execute(createVideoInput).id();
+        return createVideoUseCase.execute(createVideoInput)
+                .onItem().ignore().andSwitchTo(Uni.createFrom().item(Response.created(null).build()))
+                .onFailure().recoverWithItem(Response.serverError().build());
     }
 
     private Resource resourceOf(FileUpload videoFile) {
