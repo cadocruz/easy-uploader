@@ -28,9 +28,6 @@ public class VideoPostgreSQLGateway implements VideoGateway {
         return this.videoRepository.persistAndFlush(videoJpaEntity)
                 .onFailure().invoke(t -> log.info(t.getMessage(), t))
                 .onItem().transform(VideoJpaEntity::toAggregate);
-
-//        return this.videoRepository.persistAndFlush(videoJpaEntity).onItem().transform(VideoJpaEntity::toAggregate)
-//                .onFailure().invoke(t -> log.info(t.getMessage(), t));
     }
 
     @Override
