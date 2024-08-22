@@ -39,8 +39,6 @@ public class AWSStorageService implements StorageService {
 
         return Uni.createFrom().item(
                     s3Client.putObject(request, AsyncRequestBody.fromBytes(resource.content())))
-                .onItem().ignore().andSwitchTo(Uni.createFrom().voidItem())
-                .onFailure().invoke(failure ->
-                        System.out.println(failure.getMessage()));
+                .onItem().ignore().andSwitchTo(Uni.createFrom().voidItem());
     }
 }
